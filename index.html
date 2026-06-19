@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BNS Asia Sourcing | Premium Apparel Sourcing & Design Studio</title>
+<meta name="description" content="BNS Asia Sourcing — one-stop readymade garments solution. Premium apparel sourcing from Bangladesh connecting global fashion brands with world-class manufacturing.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ── TOKENS ─────────────────────────────────────────────────────────────── */
+:root{
+  --teal:#146C6F;--teal-dark:#0b3d3f;--teal-mid:#1d8b8f;
+  --cream:#f9f6f1;--warm:#ede9e2;--ink:#111010;--muted:#6b6b6b;
+  --white:#ffffff;--gold:#c9a96e;--border:#e4e4e4;
+  --ff-display:'Cormorant Garamond',Georgia,serif;
+  --ff-body:'Outfit',sans-serif;
+  --ease-expo:cubic-bezier(0.16,1,0.3,1);
+  --ease-io:cubic-bezier(0.65,0,0.35,1);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;font-size:16px;}
+body{font-family:var(--ff-body);color:var(--ink);background:var(--white);overflow-x:hidden;cursor:none;}
+img{display:block;width:100%;}
+a{text-decoration:none;color:inherit;}
+ul{list-style:none;}
+
+/* ── CURSOR ─────────────────────────────────────────────────────────────── */
+#cur-dot,#cur-ring{position:fixed;top:0;left:0;border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);}
+#cur-dot{width:8px;height:8px;background:var(--teal);}
+#cur-ring{width:36px;height:36px;border:1.5px solid var(--teal);transition:width .3s,height .3s,border-color .3s;}
+
+/* ── LOADER ─────────────────────────────────────────────────────────────── */
+#loader{position:fixed;inset:0;background:var(--teal-dark);z-index:9000;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:2rem;transition:opacity .8s ease,visibility .8s ease;}
+#loader.hidden{opacity:0;visibility:hidden;}
+.ld-logo{font-family:var(--ff-display);font-size:2.8rem;font-weight:300;color:var(--white);letter-spacing:.25em;opacity:0;animation:fadeUp .8s .2s var(--ease-expo) forwards;}
+.ld-sub{font-size:.65rem;font-weight:500;letter-spacing:4px;text-transform:uppercase;color:var(--gold);opacity:0;animation:fadeUp .8s .4s var(--ease-expo) forwards;}
+.ld-bar-wrap{width:200px;height:1px;background:rgba(255,255,255,.12);overflow:hidden;}
+.ld-bar{height:100%;background:var(--gold);width:0;animation:barFill 1.8s .5s var(--ease-expo) forwards;}
+@keyframes barFill{to{width:100%;}}
+
+/* ── NAV ─────────────────────────────────────────────────────────────────── */
+.nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:center;justify-content:space-between;padding:0 6%;height:82px;transition:background .5s,box-shadow .5s;}
+.nav.scrolled{background:rgba(255,255,255,.96);backdrop-filter:blur(14px);box-shadow:0 1px 0 rgba(0,0,0,.07);}
+.nav-logo{font-family:var(--ff-display);font-size:1.55rem;font-weight:600;color:var(--white);letter-spacing:.1em;transition:color .4s;display:flex;align-items:center;}
+.nav-logo img{max-height:46px;width:auto;object-fit:contain;}
+.nav.scrolled .nav-logo{color:var(--teal-dark);}
+.nav-links{display:flex;gap:2.2rem;align-items:center;}
+.nav-links a{font-size:.73rem;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,.82);position:relative;transition:color .3s;}
+.nav.scrolled .nav-links a{color:var(--muted);}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--teal);transition:width .4s var(--ease-expo);}
+.nav-links a:hover{color:var(--teal);}
+.nav-links a:hover::after{width:100%;}
+.nav-cta{padding:.58rem 1.5rem;border:1px solid rgba(255,255,255,.45);color:var(--white)!important;transition:background .3s,border-color .3s,color .3s!important;}
+.nav-cta::after{display:none!important;}
+.nav-cta:hover{background:rgba(255,255,255,.15);}
+.nav.scrolled .nav-cta{border-color:var(--teal);color:var(--teal)!important;}
+.nav.scrolled .nav-cta:hover{background:var(--teal);color:var(--white)!important;}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px;}
+.hamburger span{display:block;width:24px;height:1.5px;background:var(--white);transition:all .3s;}
+.nav.scrolled .hamburger span{background:var(--ink);}
+
+/* ── MOBILE MENU ─────────────────────────────────────────────────────────── */
+.mob-menu{position:fixed;inset:0;background:var(--teal-dark);z-index:400;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2.2rem;transform:translateX(100%);transition:transform .6s var(--ease-expo);}
+.mob-menu.open{transform:translateX(0);}
+.mob-menu a{font-family:var(--ff-display);font-size:2.4rem;font-weight:300;color:var(--white);letter-spacing:.05em;transition:color .3s;}
+.mob-menu a:hover{color:var(--gold);}
+.mob-close{position:absolute;top:2rem;right:6%;background:none;border:none;color:var(--white);font-size:1.5rem;cursor:pointer;}
+
+/* ── HERO SLIDER ─────────────────────────────────────────────────────────── */
+.hero{position:relative;height:100vh;min-height:600px;overflow:hidden;}
+.slide{position:absolute;inset:0;opacity:0;transition:opacity 1.2s var(--ease-io);}
+.slide.active{opacity:1;z-index:2;}
+.slide-bg{position:absolute;inset:0;background-size:cover;background-position:center;transform:scale(1.08);transition:transform 8s var(--ease-expo);}
+.slide.active .slide-bg{transform:scale(1);}
+.slide-overlay{position:absolute;inset:0;background:linear-gradient(110deg,rgba(8,32,34,.82) 0%,rgba(20,108,111,.3) 60%,transparent 100%);}
+.slide-content{position:absolute;bottom:13vh;left:8%;max-width:680px;color:var(--white);transform:translateY(32px);opacity:0;transition:transform 1s .4s var(--ease-expo),opacity 1s .4s;}
+.slide.active .slide-content{transform:translateY(0);opacity:1;}
+.slide-tag{display:inline-flex;align-items:center;gap:.8rem;font-size:.7rem;font-weight:500;letter-spacing:3.5px;text-transform:uppercase;color:var(--gold);margin-bottom:1.3rem;}
+.slide-tag::before{content:'';display:block;width:30px;height:1px;background:var(--gold);}
+.slide-content h1{font-family:var(--ff-display);font-size:clamp(2.6rem,5.2vw,5rem);font-weight:300;line-height:1.1;margin-bottom:1.3rem;}
+.slide-content h1 em{font-style:italic;color:var(--gold);}
+.slide-content p{font-size:.97rem;font-weight:300;line-height:1.75;opacity:.85;max-width:500px;margin-bottom:2rem;}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;}
+.btn-p{padding:.95rem 2.4rem;background:var(--teal);color:var(--white);font-size:.73rem;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;border:1px solid var(--teal);display:inline-block;transition:background .3s,transform .3s;}
+.btn-p:hover{background:var(--teal-dark);transform:translateY(-2px);}
+.btn-g{padding:.95rem 2.4rem;background:transparent;color:var(--white);font-size:.73rem;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;border:1px solid rgba(255,255,255,.4);display:inline-block;transition:background .3s,border-color .3s,transform .3s;}
+.btn-g:hover{background:rgba(255,255,255,.1);border-color:var(--white);transform:translateY(-2px);}
+.slide-dots{position:absolute;right:5%;bottom:13vh;z-index:10;display:flex;flex-direction:column;gap:.5rem;}
+.dot{width:4px;height:28px;background:rgba(255,255,255,.28);cursor:pointer;transition:background .3s,height .3s;}
+.dot.active{background:var(--gold);height:48px;}
+.slide-arrows{position:absolute;bottom:5%;left:8%;z-index:10;display:flex;gap:.8rem;}
+.arr{width:46px;height:46px;border:1px solid rgba(255,255,255,.3);background:transparent;color:var(--white);font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .3s,border-color .3s;}
+.arr:hover{background:var(--teal);border-color:var(--teal);}
+.scroll-hint{position:absolute;bottom:5%;left:50%;transform:translateX(-50%);z-index:10;display:flex;flex-direction:column;align-items:center;gap:.5rem;color:rgba(255,255,255,.45);font-size:.62rem;letter-spacing:3px;text-transform:uppercase;}
+.scroll-line{width:1px;height:48px;background:linear-gradient(to bottom,rgba(255,255,255,.45),transparent);animation:sPulse 2s infinite;}
+@keyframes sPulse{0%,100%{opacity:.3;}50%{opacity:1;}}
+
+/* ── MARQUEE ─────────────────────────────────────────────────────────────── */
+.marquee{background:var(--teal);padding:.95rem 0;overflow:hidden;white-space:nowrap;}
+.mq-track{display:inline-block;animation:mq 28s linear infinite;}
+.mq-item{display:inline-flex;align-items:center;gap:2rem;font-size:.7rem;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.8);padding:0 3rem;}
+.mq-sep{display:inline-block;width:4px;height:4px;background:var(--gold);border-radius:50%;}
+@keyframes mq{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+/* ── SECTION UTILS ───────────────────────────────────────────────────────── */
+.sec{padding:8rem 8%;}
+.sec-alt{background:var(--cream);}
+.sec-dark{background:var(--teal-dark);}
+.eyebrow{display:inline-flex;align-items:center;gap:1rem;font-size:.68rem;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:var(--teal);margin-bottom:1rem;}
+.eyebrow::before{content:'';display:block;width:26px;height:1px;background:currentColor;}
+.sec-dark .eyebrow{color:var(--gold);}
+.sec-title{font-family:var(--ff-display);font-size:clamp(2rem,3.8vw,3.6rem);font-weight:300;line-height:1.15;margin-bottom:1.4rem;}
+.sec-sub{font-size:.97rem;font-weight:300;line-height:1.75;color:var(--muted);max-width:520px;}
+.sec-dark .sec-sub{color:rgba(255,255,255,.55);}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(38px);transition:opacity .9s var(--ease-expo),transform .9s var(--ease-expo);}
+.rv.vis{opacity:1;transform:translateY(0);}
+.d1{transition-delay:.1s;}.d2{transition-delay:.2s;}.d3{transition-delay:.3s;}.d4{transition-delay:.4s;}
+
+/* ── ABOUT ───────────────────────────────────────────────────────────────── */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center;}
+.about-img-wrap{position:relative;}
+.ab-main{aspect-ratio:3/4;overflow:hidden;}
+.ab-main img{width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease-expo);}
+.ab-main:hover img{transform:scale(1.04);}
+.ab-accent{position:absolute;bottom:-3rem;right:-2.5rem;width:52%;aspect-ratio:1;overflow:hidden;border:6px solid var(--white);box-shadow:0 20px 60px rgba(0,0,0,.13);}
+.ab-accent img{width:100%;height:100%;object-fit:cover;}
+.ab-badge{position:absolute;top:2rem;left:-2rem;background:var(--teal);color:var(--white);padding:1.4rem;text-align:center;width:116px;}
+.ab-badge strong{display:block;font-family:var(--ff-display);font-size:2.1rem;font-weight:600;line-height:1;}
+.ab-badge span{font-size:.62rem;letter-spacing:2px;text-transform:uppercase;opacity:.85;margin-top:.3rem;display:block;}
+.ab-stats{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:2.8rem;}
+.stat-box{border-top:1px solid var(--border);padding-top:1.2rem;}
+.stat-box strong{display:block;font-family:var(--ff-display);font-size:2.3rem;font-weight:300;color:var(--teal);line-height:1;}
+.stat-box span{font-size:.72rem;font-weight:400;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;margin-top:.4rem;display:block;}
+
+/* ── STRENGTH CARDS ──────────────────────────────────────────────────────── */
+.strength-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-top:4rem;}
+.str-card{padding:2.5rem 2rem;border:1px solid var(--border);transition:border-color .4s,box-shadow .4s,transform .4s;}
+.str-card:hover{border-color:var(--teal);box-shadow:0 8px 40px rgba(20,108,111,.08);transform:translateY(-4px);}
+.str-icon{font-size:2rem;margin-bottom:1.3rem;}
+.str-card h3{font-size:.95rem;font-weight:600;margin-bottom:.8rem;color:var(--ink);}
+.str-card p{font-size:.86rem;line-height:1.7;color:var(--muted);}
+
+/* ── CAPABILITIES ────────────────────────────────────────────────────────── */
+.cap-grid{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--border);margin-top:4rem;}
+.cap-card{padding:2.8rem 1.8rem 2.8rem 0;border-right:1px solid var(--border);transition:background .4s;}
+.cap-card:last-child{border-right:none;padding-right:0;}
+.cap-card:first-child{padding-left:0;}
+.cap-card:nth-child(2),.cap-card:nth-child(3){padding-left:1.8rem;}
+.cap-card:hover{background:var(--cream);}
+.cap-num{font-family:var(--ff-display);font-size:3.2rem;font-weight:300;color:var(--warm);line-height:1;margin-bottom:1.3rem;transition:color .4s;}
+.cap-card:hover .cap-num{color:rgba(20,108,111,.18);}
+.cap-card h3{font-size:.9rem;font-weight:600;margin-bottom:.8rem;}
+.cap-card p{font-size:.84rem;line-height:1.7;color:var(--muted);}
+
+/* ── PRODUCTS ────────────────────────────────────────────────────────────── */
+.prod-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:3.5rem;}
+.link-arrow{font-size:.73rem;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--teal);display:inline-flex;align-items:center;gap:.5rem;transition:gap .3s;}
+.link-arrow:hover{gap:1rem;}
+.link-arrow::after{content:'→';}
+.prod-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;}
+.prod-card{position:relative;overflow:hidden;aspect-ratio:3/4;cursor:pointer;}
+.prod-card img{width:100%;height:100%;object-fit:cover;transition:transform .9s var(--ease-expo);}
+.prod-card:hover img{transform:scale(1.08);}
+.prod-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(8,32,34,.88) 0%,transparent 55%);display:flex;flex-direction:column;justify-content:flex-end;padding:2.5rem;transform:translateY(8px);transition:transform .5s var(--ease-expo);}
+.prod-card:hover .prod-overlay{transform:translateY(0);}
+.prod-cat{font-size:.63rem;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:.4rem;}
+.prod-overlay h3{font-family:var(--ff-display);font-size:1.85rem;font-weight:300;color:var(--white);margin-bottom:.7rem;line-height:1.2;}
+.prod-sub{font-size:.8rem;color:rgba(255,255,255,.68);line-height:1.6;transform:translateY(10px);opacity:0;transition:transform .5s .1s var(--ease-expo),opacity .5s .1s;}
+.prod-card:hover .prod-sub{transform:translateY(0);opacity:1;}
+.prod-explore{display:inline-flex;align-items:center;gap:.5rem;font-size:.7rem;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--white);margin-top:1rem;border-bottom:1px solid rgba(255,255,255,.35);padding-bottom:2px;transform:translateY(10px);opacity:0;transition:transform .5s .18s var(--ease-expo),opacity .5s .18s;}
+.prod-card:hover .prod-explore{transform:translateY(0);opacity:1;}
+.prod-explore::after{content:'→';transition:transform .3s;}
+.prod-card:hover .prod-explore::after{transform:translateX(4px);}
+
+/* capacity table */
+.cap-table-wrap{margin-top:4rem;overflow-x:auto;}
+.cap-table{width:100%;border-collapse:collapse;}
+.cap-table th{font-size:.7rem;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--teal);padding:1rem 1.5rem;border-bottom:2px solid var(--teal);text-align:left;}
+.cap-table td{padding:1rem 1.5rem;border-bottom:1px solid var(--border);font-size:.88rem;color:var(--ink);}
+.cap-table tr:last-child td{border-bottom:none;}
+.cap-table tr:hover td{background:var(--cream);}
+.cert-badges{display:flex;flex-wrap:wrap;gap:.4rem;}
+.cbadge{padding:.3rem .7rem;background:rgba(20,108,111,.08);color:var(--teal);font-size:.68rem;font-weight:600;letter-spacing:1px;}
+
+/* ── PROCESS ─────────────────────────────────────────────────────────────── */
+.process-sec{background:var(--teal-dark);padding:7rem 8%;position:relative;overflow:hidden;}
+.process-sec::before{content:'PROCESS';position:absolute;right:-1%;top:50%;transform:translateY(-50%);font-family:var(--ff-display);font-size:13rem;font-weight:600;color:rgba(255,255,255,.025);pointer-events:none;white-space:nowrap;}
+.proc-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin-top:4rem;}
+.proc-step{padding:2rem 1.8rem 2rem 0;border-left:1px solid rgba(255,255,255,.1);position:relative;}
+.proc-step:first-child{border-left:none;padding-left:0;}
+.proc-step:nth-child(n+2){padding-left:1.8rem;}
+.proc-num{font-size:.68rem;color:var(--gold);letter-spacing:3px;margin-bottom:1.3rem;}
+.proc-step h4{font-size:.88rem;font-weight:500;color:var(--white);margin-bottom:.7rem;line-height:1.4;}
+.proc-step p{font-size:.78rem;color:rgba(255,255,255,.42);line-height:1.6;}
+
+/* ── CUSTOMERS ───────────────────────────────────────────────────────────── */
+.customers-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin-top:4rem;}
+.cust-card{padding:1.8rem 1.5rem;border:1px solid var(--border);text-align:center;transition:border-color .3s,transform .3s,box-shadow .3s;}
+.cust-card:hover{border-color:var(--teal);transform:translateY(-3px);box-shadow:0 8px 30px rgba(20,108,111,.07);}
+.cust-flag{font-size:1.5rem;margin-bottom:.7rem;}
+.cust-card h4{font-size:.82rem;font-weight:600;color:var(--ink);margin-bottom:.3rem;line-height:1.3;}
+.cust-card span{font-size:.72rem;color:var(--muted);letter-spacing:1px;}
+
+/* ── CERTIFICATIONS ──────────────────────────────────────────────────────── */
+.cert-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;margin-top:4rem;}
+.cert-card{text-align:center;padding:2.5rem 1.5rem;border:1px solid var(--border);transition:border-color .4s,box-shadow .4s,transform .4s;}
+.cert-card:hover{border-color:var(--teal);box-shadow:0 8px 40px rgba(20,108,111,.08);transform:translateY(-4px);}
+.cert-icon{width:54px;height:54px;margin:0 auto 1.3rem;background:var(--cream);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.4rem;}
+.cert-card h4{font-size:.84rem;font-weight:600;margin-bottom:.5rem;}
+.cert-card p{font-size:.78rem;color:var(--muted);line-height:1.5;}
+
+/* ── SUSTAINABILITY ──────────────────────────────────────────────────────── */
+.sus-grid{display:grid;grid-template-columns:1.1fr 0.9fr;gap:6rem;align-items:center;}
+.sus-img{aspect-ratio:4/5;overflow:hidden;position:relative;}
+.sus-img img{width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease-expo);}
+.sus-img:hover img{transform:scale(1.04);}
+.sus-bar{position:absolute;bottom:0;left:0;right:0;background:var(--teal);padding:1.3rem 2rem;}
+.sus-bar span{font-size:.7rem;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--white);}
+.pills{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:2.5rem;}
+.pill{padding:.45rem 1.1rem;border:1px solid var(--border);font-size:.73rem;font-weight:500;color:var(--muted);letter-spacing:1px;transition:border-color .3s,background .3s,color .3s;cursor:default;}
+.pill:hover{border-color:var(--teal);background:var(--teal);color:var(--white);}
+
+/* ── TEAM ────────────────────────────────────────────────────────────────── */
+.team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-top:4rem;}
+.team-card{padding:2.5rem;border:1px solid var(--border);transition:border-color .4s,box-shadow .4s;}
+.team-card:hover{border-color:var(--teal);box-shadow:0 8px 40px rgba(20,108,111,.07);}
+.team-role{font-size:.65rem;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--teal);margin-bottom:.6rem;}
+.team-card h3{font-family:var(--ff-display);font-size:1.5rem;font-weight:400;margin-bottom:.3rem;}
+.team-card .desig{font-size:.8rem;color:var(--muted);margin-bottom:1.3rem;font-weight:500;}
+.team-detail{font-size:.82rem;color:var(--muted);line-height:1.7;}
+.team-detail a{color:var(--teal);transition:opacity .3s;}
+.team-detail a:hover{opacity:.7;}
+
+/* ── CONTACT ─────────────────────────────────────────────────────────────── */
+.contact-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:6rem;align-items:start;}
+.offices{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:2.5rem;}
+.office-card{padding:1.8rem;border-left:3px solid var(--teal);}
+.office-card h4{font-size:.72rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--teal);margin-bottom:.8rem;}
+.office-card p{font-size:.85rem;line-height:1.7;color:var(--muted);}
+.office-card strong{display:block;font-size:.78rem;font-weight:600;color:var(--ink);margin-top:.6rem;}
+.contact-form{display:flex;flex-direction:column;gap:1.4rem;}
+.f-row{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem;}
+.f-group{display:flex;flex-direction:column;gap:.45rem;}
+.f-group label{font-size:.68rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--muted);}
+.f-group input,.f-group select,.f-group textarea{width:100%;padding:.95rem 1.1rem;border:1px solid #ddd;background:var(--white);font-family:var(--ff-body);font-size:.9rem;color:var(--ink);outline:none;transition:border-color .3s;-webkit-appearance:none;}
+.f-group input:focus,.f-group select:focus,.f-group textarea:focus{border-color:var(--teal);}
+.f-group textarea{resize:vertical;min-height:115px;}
+.submit-btn{padding:1rem 2.8rem;background:var(--teal);color:var(--white);font-family:var(--ff-body);font-size:.73rem;font-weight:600;letter-spacing:3px;text-transform:uppercase;border:none;cursor:pointer;align-self:flex-start;transition:background .3s,transform .3s;}
+.submit-btn:hover{background:var(--teal-dark);transform:translateY(-2px);}
+
+/* ── FOOTER ──────────────────────────────────────────────────────────────── */
+footer{background:var(--ink);color:rgba(255,255,255,.55);padding:5rem 8% 3rem;}
+.foot-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:4rem;margin-bottom:4rem;padding-bottom:4rem;border-bottom:1px solid rgba(255,255,255,.07);}
+.foot-brand .brand{font-family:var(--ff-display);font-size:1.75rem;font-weight:300;color:var(--white);margin-bottom:.8rem;}
+.foot-brand p{font-size:.84rem;line-height:1.7;max-width:255px;margin-bottom:1.4rem;}
+.socials{display:flex;gap:.7rem;}
+.soc{width:34px;height:34px;border:1px solid rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;font-size:.75rem;color:rgba(255,255,255,.45);transition:border-color .3s,background .3s,color .3s;}
+.soc:hover{border-color:var(--teal);background:var(--teal);color:var(--white);}
+.foot-col h5{font-size:.68rem;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--white);margin-bottom:1.4rem;}
+.foot-col ul{display:flex;flex-direction:column;gap:.75rem;}
+.foot-col ul li a{font-size:.84rem;color:rgba(255,255,255,.48);transition:color .3s;}
+.foot-col ul li a:hover{color:var(--gold);}
+.foot-bottom{display:flex;justify-content:space-between;align-items:center;font-size:.76rem;}
+.foot-bottom a{color:rgba(255,255,255,.45);transition:color .3s;}
+.foot-bottom a:hover{color:var(--gold);}
+
+/* ── RESPONSIVE ──────────────────────────────────────────────────────────── */
+@media(max-width:1100px){
+  .cap-grid{grid-template-columns:repeat(2,1fr);}
+  .cap-card{border-right:none;border-bottom:1px solid var(--border);padding:2.5rem 0 2.5rem 0;}
+  .cap-card:nth-child(odd){border-right:1px solid var(--border);padding-right:1.8rem;}
+  .cap-card:nth-child(even){padding-left:1.8rem;}
+  .cap-card:last-child{border-bottom:none;}
+  .proc-grid{grid-template-columns:repeat(3,1fr);}
+  .cert-grid{grid-template-columns:repeat(2,1fr);}
+  .customers-grid{grid-template-columns:repeat(3,1fr);}
+  .foot-grid{grid-template-columns:1fr 1fr;gap:3rem;}
+  .strength-grid{grid-template-columns:repeat(2,1fr);}
+}
+@media(max-width:900px){
+  .about-grid,.sus-grid,.contact-grid{grid-template-columns:1fr;gap:4rem;}
+  .prod-grid{grid-template-columns:1fr 1fr;}
+  .ab-accent{right:0;bottom:-2rem;}
+  .nav-links{display:none;}
+  .hamburger{display:flex;}
+  .proc-grid{grid-template-columns:repeat(2,1fr);}
+  .team-grid{grid-template-columns:1fr 1fr;}
+  .offices{grid-template-columns:1fr;}
+}
+@media(max-width:600px){
+  .sec{padding:5rem 6%;}
+  .prod-grid{grid-template-columns:1fr;}
+  .cap-grid{grid-template-columns:1fr;}
+  .cap-card:nth-child(odd){border-right:none;padding-right:0;}
+  .cap-card:nth-child(even){padding-left:0;}
+  .cert-grid{grid-template-columns:1fr 1fr;}
+  .proc-grid{grid-template-columns:1fr;}
+  .f-row{grid-template-columns:1fr;}
+  .prod-header{flex-direction:column;align-items:flex-start;gap:1rem;}
+  .foot-grid{grid-template-columns:1fr;gap:2.5rem;}
+  .foot-bottom{flex-direction:column;gap:1rem;text-align:center;}
+  .customers-grid{grid-template-columns:1fr 1fr;}
+  .strength-grid{grid-template-columns:1fr;}
+  .team-grid{grid-template-columns:1fr;}
+}
+
+/* ── KEYFRAMES ───────────────────────────────────────────────────────────── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
+</style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div id="cur-dot"></div>
+<div id="cur-ring"></div>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="ld-logo">BNS ASIA</div>
+  <div class="ld-sub">Sourcing</div>
+  <div class="ld-bar-wrap"><div class="ld-bar"></div></div>
+</div>
+
+<!-- MOBILE MENU -->
+<div class="mob-menu" id="mobMenu">
+  <button class="mob-close" id="mobClose">✕</button>
+  <a href="#about" onclick="closeMob()">About</a>
+  <a href="#capabilities" onclick="closeMob()">Capabilities</a>
+  <a href="#products" onclick="closeMob()">Products</a>
+  <a href="#customers" onclick="closeMob()">Customers</a>
+  <a href="#sustainability" onclick="closeMob()">Sustainability</a>
+  <a href="#contact" onclick="closeMob()">Contact</a>
+</div>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <div class="nav-logo">
+    <img src="images/logo.png" alt="BNS Asia Sourcing" onerror="this.parentElement.innerHTML='BNS Asia'">
+  </div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#capabilities">Capabilities</a></li>
+    <li><a href="#products">Products</a></li>
+    <li><a href="#customers">Customers</a></li>
+    <li><a href="#sustainability">Sustainability</a></li>
+    <li><a href="#contact" class="nav-cta">Get in Touch</a></li>
+  </ul>
+  <button class="hamburger" id="hamBtn" onclick="openMob()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO SLIDER -->
+<section class="hero" id="hero">
+  <div class="slide active">
+    <div class="slide-bg" style="background-image:url('https://images.unsplash.com/photo-1558769132-cb1aea458c5e?q=80&w=1800')"></div>
+    <div class="slide-overlay"></div>
+    <div class="slide-content">
+      <span class="slide-tag">One-Stop Garment Solution</span>
+      <h1>Where Design Meets <em>Supply Chain</em> Excellence</h1>
+      <p>Connecting elite fashion labels with precision-driven garment manufacturing hubs across Bangladesh.</p>
+      <div class="hero-btns">
+        <a href="#products" class="btn-p">Explore Products</a>
+        <a href="#contact" class="btn-g">Initiate Partnership</a>
+      </div>
+    </div>
+  </div>
+  <div class="slide">
+    <div class="slide-bg" style="background-image:url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=1800')"></div>
+    <div class="slide-overlay"></div>
+    <div class="slide-content">
+      <span class="slide-tag">Sustainable Manufacturing</span>
+      <h1>Crafted with Purpose, <em>Built for</em> the Planet</h1>
+      <p>Eco-conscious sourcing with GOTS-certified organic materials and ethical production at every step.</p>
+      <div class="hero-btns">
+        <a href="#sustainability" class="btn-p">Our Commitment</a>
+        <a href="#contact" class="btn-g">Request Samples</a>
+      </div>
+    </div>
+  </div>
+  <div class="slide">
+    <div class="slide-bg" style="background-image:url('https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?q=80&w=1800')"></div>
+    <div class="slide-overlay"></div>
+    <div class="slide-content">
+      <span class="slide-tag">Global Quality Standards</span>
+      <h1>Precision Quality <em>Without</em> Compromise</h1>
+      <p>Zero-tolerance QA policy. Inline inspections, in-house labs, and certified factory audits across every production run.</p>
+      <div class="hero-btns">
+        <a href="#capabilities" class="btn-p">Our Capabilities</a>
+        <a href="#contact" class="btn-g">Submit RFQ</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide-dots" id="slideDots">
+    <div class="dot active" onclick="goTo(0)"></div>
+    <div class="dot" onclick="goTo(1)"></div>
+    <div class="dot" onclick="goTo(2)"></div>
+  </div>
+  <div class="slide-arrows">
+    <button class="arr" onclick="prev()">←</button>
+    <button class="arr" onclick="next()">→</button>
+  </div>
+  <div class="scroll-hint"><span>Scroll</span><div class="scroll-line"></div></div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee">
+  <div class="mq-track">
+    <span class="mq-item">Premium Sourcing <span class="mq-sep"></span></span>
+    <span class="mq-item">Bangladesh Manufacturing <span class="mq-sep"></span></span>
+    <span class="mq-item">GOTS Certified <span class="mq-sep"></span></span>
+    <span class="mq-item">BSCI Audited <span class="mq-sep"></span></span>
+    <span class="mq-item">Zero Tolerance QA <span class="mq-sep"></span></span>
+    <span class="mq-item">Design to Delivery <span class="mq-sep"></span></span>
+    <span class="mq-item">OEKO-TEX® 100 <span class="mq-sep"></span></span>
+    <span class="mq-item">WRAP Certified <span class="mq-sep"></span></span>
+    <span class="mq-item">SEDEX Compliant <span class="mq-sep"></span></span>
+    <span class="mq-item">Premium Sourcing <span class="mq-sep"></span></span>
+    <span class="mq-item">Bangladesh Manufacturing <span class="mq-sep"></span></span>
+    <span class="mq-item">GOTS Certified <span class="mq-sep"></span></span>
+    <span class="mq-item">BSCI Audited <span class="mq-sep"></span></span>
+    <span class="mq-item">Zero Tolerance QA <span class="mq-sep"></span></span>
+    <span class="mq-item">Design to Delivery <span class="mq-sep"></span></span>
+    <span class="mq-item">OEKO-TEX® 100 <span class="mq-sep"></span></span>
+    <span class="mq-item">WRAP Certified <span class="mq-sep"></span></span>
+    <span class="mq-item">SEDEX Compliant <span class="mq-sep"></span></span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="sec" id="about">
+  <div class="about-grid">
+    <div class="about-img-wrap rv">
+      <div class="ab-main">
+        <img src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?q=80&w=800" alt="BNS Asia Sourcing Studio">
+      </div>
+      <div class="ab-accent">
+        <img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?q=80&w=400" alt="Fabric detail">
+      </div>
+      <div class="ab-badge">
+        <strong>2022</strong>
+        <span>Est. Dhaka</span>
+      </div>
+    </div>
+    <div>
+      <span class="eyebrow rv">Who We Are</span>
+      <h2 class="sec-title rv d1">One-Stop Readymade Garments Solution</h2>
+      <p class="sec-sub rv d2">BNS Asia Sourcing offers complete apparel solutions from our Dhaka headquarters — with foreign hub workstations around the globe. We research future-compatible markets and ensure uninterrupted relationships between our clients and origin office.</p>
+      <p class="sec-sub rv d3" style="margin-top:1rem;">Our creative design team continuously develops seasonal collections — Spring/Summer presented end of April, and Autumn/Winter end of October. With our own sampling room, we develop fresh queries in just 3–4 days for local yarns and 10–12 days for foreign yarns.</p>
+      <div class="ab-stats rv d4">
+        <div class="stat-box"><strong>500K+</strong><span>T-Shirts / Month</span></div>
+        <div class="stat-box"><strong>300K+</strong><span>Sweaters / Month</span></div>
+        <div class="stat-box"><strong>400K+</strong><span>Denim Pcs / Month</span></div>
+        <div class="stat-box"><strong>11+</strong><span>Global Buyers</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OUR STRENGTHS -->
+<section class="sec sec-alt" id="capabilities">
+  <span class="eyebrow rv">Our Operations</span>
+  <h2 class="sec-title rv d1">Core Strengths</h2>
+  <p class="sec-sub rv d2">A complete in-house ecosystem — from design and sampling through QA and technical support — built around our core promise: zero tolerance on quality.</p>
+  <div class="strength-grid">
+    <div class="str-card rv d1">
+      <div class="str-icon">✏️</div>
+      <h3>Own Designing Team</h3>
+      <p>Our creative team from Ibiza presents bi-annual development collections — Spring/Summer in April and Autumn/Winter in October — translating global trends into production-ready tech-packs.</p>
+    </div>
+    <div class="str-card rv d2">
+      <div class="str-icon">🧵</div>
+      <h3>Independent Sample Section</h3>
+      <p>We have our own sampling room. Fresh queries are developed in 3–4 days for local yarns and 10–12 days for foreign yarns, with full transparency at every stage.</p>
+    </div>
+    <div class="str-card rv d3">
+      <div class="str-icon">⚙️</div>
+      <h3>Technical Support</h3>
+      <p>Our textile graduate engineers guide factories from yarn selection through fabric finishing — providing daily troubleshooting to achieve perfect fabric and garment fit.</p>
+    </div>
+    <div class="str-card rv d1">
+      <div class="str-icon">🔬</div>
+      <h3>In-House Lab</h3>
+      <p>Our detailed in-house lab cross-checks fabric and garments daily. Inline QA randomly picks items from the production floor to verify quality before goods are released.</p>
+    </div>
+    <div class="str-card rv d2">
+      <div class="str-icon">✅</div>
+      <h3>Zero Tolerance QA</h3>
+      <p>Our own QA system monitors every process end-to-end. In-house final inspection of packed goods is carried out before buyer QA teams conduct their own checks.</p>
+    </div>
+    <div class="str-card rv d3">
+      <div class="str-icon">🌍</div>
+      <h3>Global Presence</h3>
+      <p>With foreign hub workstations around the globe, we research future markets and maintain uninterrupted relationships between our clients and the origin office.</p>
+    </div>
+  </div>
+
+  <!-- CAPABILITY BREAKDOWN -->
+  <div style="margin-top:5rem;">
+    <span class="eyebrow rv">What We Deliver</span>
+    <h2 class="sec-title rv d1">Core Capabilities</h2>
+    <div class="cap-grid">
+      <div class="cap-card rv d1">
+        <div class="cap-num">01</div>
+        <h3>Design & Trend Development</h3>
+        <p>Seasonal high-fashion trends translated into manufacturing-ready product ranges and tech-packs for global markets.</p>
+      </div>
+      <div class="cap-card rv d2">
+        <div class="cap-num">02</div>
+        <h3>Material Sourcing & Merchandising</h3>
+        <p>Premium fabrics, sustainable organic yarns, and bespoke trims curated from a certified network of elite textile mills.</p>
+      </div>
+      <div class="cap-card rv d3">
+        <div class="cap-num">03</div>
+        <h3>Precision Quality Assurance</h3>
+        <p>Rigorous inline inspections and specialized final sample testing ensuring exact production accuracy across every SKU.</p>
+      </div>
+      <div class="cap-card rv d4">
+        <div class="cap-num">04</div>
+        <h3>Compliance & Factory Audits</h3>
+        <p>Execution managed exclusively within state-of-the-art facilities holding the highest global certifications.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section class="sec" id="products">
+  <div class="prod-header">
+    <div>
+      <span class="eyebrow rv">The Portfolio</span>
+      <h2 class="sec-title rv d1">Product Categories</h2>
+    </div>
+    <a href="#contact" class="link-arrow rv">Request Full Catalogue</a>
+  </div>
+
+  <div class="prod-grid">
+    <div class="prod-card rv">
+      <img src="https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?q=80&w=700" alt="Menswear">
+      <div class="prod-overlay">
+        <span class="prod-cat">Collection 01</span>
+        <h3>Men's Fine Knit & Woven</h3>
+        <p class="prod-sub">T-shirts, polo shirts, vests, denim — in Single Jersey, Piqué, and engineered wovens. Up to 500,000 pcs/month.</p>
+        <a href="#contact" class="prod-explore">Explore Range</a>
+      </div>
+    </div>
+    <div class="prod-card rv d1">
+      <img src="https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?q=80&w=700" alt="Womenswear">
+      <div class="prod-overlay">
+        <span class="prod-cat">Collection 02</span>
+        <h3>Ladies Woven & Knit</h3>
+        <p class="prod-sub">Shorts, pants, tops, cardigans, pullovers and fashion sweaters — from cotton twills to viscose blends and lurex knits.</p>
+        <a href="#contact" class="prod-explore">Explore Range</a>
+      </div>
+    </div>
+    <div class="prod-card rv d2">
+      <img src="https://images.unsplash.com/photo-1519457431-44ccd64a579b?q=80&w=700" alt="Kidswear">
+      <div class="prod-overlay">
+        <span class="prod-cat">Collection 03</span>
+        <h3>Baby & Kids Collection</h3>
+        <p class="prod-sub">Night suits, rompers, pullovers, cardigans, and sweaters in organic cotton, acrylic, and cotton-nylon blends.</p>
+        <a href="#contact" class="prod-explore">Explore Range</a>
+      </div>
+    </div>
+    <div class="prod-card rv">
+      <img src="https://images.unsplash.com/photo-1445205170230-053b83016050?q=80&w=700" alt="Sweaters">
+      <div class="prod-overlay">
+        <span class="prod-cat">Collection 04</span>
+        <h3>Sweater Collection</h3>
+        <p class="prod-sub">Ladies fashion sweaters, junior and kids knitwear in 3gg, 5gg, 7gg, and 12gg gauges. Up to 300,000 pcs/month.</p>
+        <a href="#contact" class="prod-explore">Explore Range</a>
+      </div>
+    </div>
+    <div class="prod-card rv d1">
+      <img src="https://images.unsplash.com/photo-1542272604-787c3835535d?q=80&w=700" alt="Denim">
+      <div class="prod-overlay">
+        <span class="prod-cat">Collection 05</span>
+        <h3>Denim Range</h3>
+        <p class="prod-sub">Ladies denim pants and shorts in cotton-spandex blends with specialist washes — acid, enzyme stone, California, and more.</p>
+        <a href="#contact" class="prod-explore">Explore Range</a>
+      </div>
+    </div>
+    <div class="prod-card rv d2">
+      <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=700" alt="Handcraft">
+      <div class="prod-overlay">
+        <span class="prod-cat">Collection 06</span>
+        <h3>Handcraft & PVC Products</h3>
+        <p class="prod-sub">Artisan handcraft collections and PVC/rubber product ranges for brands seeking unique, artisanal sourcing options.</p>
+        <a href="#contact" class="prod-explore">Explore Range</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRODUCTION CAPACITY TABLE -->
+  <div style="margin-top:5rem;">
+    <span class="eyebrow rv">Output Numbers</span>
+    <h2 class="sec-title rv d1">Monthly Production Capacity</h2>
+    <div class="cap-table-wrap rv d2">
+      <table class="cap-table">
+        <thead>
+          <tr>
+            <th>Product Category</th>
+            <th>Capacity / Month</th>
+            <th>Certifications</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>T-Shirt (Fine Knit)</strong></td>
+            <td>500,000 Pcs</td>
+            <td><div class="cert-badges"><span class="cbadge">BSCI</span><span class="cbadge">GOTS</span><span class="cbadge">OEKO-TEX</span><span class="cbadge">WRAP</span><span class="cbadge">SEDEX</span><span class="cbadge">ACCORD</span></div></td>
+          </tr>
+          <tr>
+            <td><strong>Sweater</strong></td>
+            <td>300,000 Pcs</td>
+            <td><div class="cert-badges"><span class="cbadge">BSCI</span><span class="cbadge">GOTS</span><span class="cbadge">OEKO-TEX</span><span class="cbadge">WRAP</span><span class="cbadge">SEDEX</span><span class="cbadge">ACCORD</span></div></td>
+          </tr>
+          <tr>
+            <td><strong>Woven</strong></td>
+            <td>500,000 Pcs</td>
+            <td><div class="cert-badges"><span class="cbadge">BSCI</span><span class="cbadge">GOTS</span><span class="cbadge">OEKO-TEX</span><span class="cbadge">WRAP</span><span class="cbadge">SEDEX</span><span class="cbadge">ACCORD</span></div></td>
+          </tr>
+          <tr>
+            <td><strong>Denim</strong></td>
+            <td>400,000 Pcs</td>
+            <td><div class="cert-badges"><span class="cbadge">BSCI</span><span class="cbadge">GOTS</span><span class="cbadge">OEKO-TEX</span><span class="cbadge">WRAP</span><span class="cbadge">SEDEX</span><span class="cbadge">ACCORD</span></div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process-sec" id="process">
+  <span class="eyebrow rv">How We Work</span>
+  <h2 class="sec-title rv d1" style="color:var(--white);">From Brief to Shipment</h2>
+  <div class="proc-grid">
+    <div class="proc-step rv d1">
+      <div class="proc-num">Step 01</div>
+      <h4>Brand Brief & RFQ</h4>
+      <p>We receive your product requirements, target retail price, quality standards, and volume forecasts.</p>
+    </div>
+    <div class="proc-step rv d2">
+      <div class="proc-num">Step 02</div>
+      <h4>Design & Development</h4>
+      <p>Our Ibiza-based design team creates tech-packs, sourcing options, and seasonal proposals within days.</p>
+    </div>
+    <div class="proc-step rv d3">
+      <div class="proc-num">Step 03</div>
+      <h4>Sample Production</h4>
+      <p>Samples produced in our own room — 3–4 days for local yarn, 10–12 days for foreign yarn — shipped for approval.</p>
+    </div>
+    <div class="proc-step rv d4">
+      <div class="proc-num">Step 04</div>
+      <h4>Bulk Manufacturing</h4>
+      <p>Approved designs enter production with daily in-house lab checks and inline QA at every stage.</p>
+    </div>
+    <div class="proc-step rv d4">
+      <div class="proc-num">Step 05</div>
+      <h4>Final QC & Shipment</h4>
+      <p>In-house final inspection of packed goods, then buyer QA sign-off and coordinated on-time delivery.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CUSTOMERS -->
+<section class="sec sec-alt" id="customers">
+  <span class="eyebrow rv">Who We Work With</span>
+  <h2 class="sec-title rv d1">Our Global Customers</h2>
+  <p class="sec-sub rv d2">Trusted by leading fashion brands and buying houses across Europe and the Americas.</p>
+  <div class="customers-grid">
+    <div class="cust-card rv d1"><div class="cust-flag">🇮🇹</div><h4>Interactive Fashion Società</h4><span>Italy</span></div>
+    <div class="cust-card rv d2"><div class="cust-flag">🇺🇸</div><h4>Mamiye Group LLC</h4><span>USA</span></div>
+    <div class="cust-card rv d3"><div class="cust-flag">🇮🇹</div><h4>Kiss From Florence</h4><span>Italy</span></div>
+    <div class="cust-card rv d1"><div class="cust-flag">🇩🇰</div><h4>Mark Louge</h4><span>Denmark</span></div>
+    <div class="cust-card rv d2"><div class="cust-flag">🇩🇪</div><h4>Pia TEX</h4><span>Germany</span></div>
+    <div class="cust-card rv d3"><div class="cust-flag">🇪🇸</div><h4>Sfera</h4><span>Spain</span></div>
+    <div class="cust-card rv d1"><div class="cust-flag">🇩🇪</div><h4>KIK</h4><span>Germany</span></div>
+    <div class="cust-card rv d2"><div class="cust-flag">🇩🇪</div><h4>TAM Fashion GmbH</h4><span>Germany</span></div>
+    <div class="cust-card rv d3"><div class="cust-flag">🇫🇷</div><h4>Vertbaudet</h4><span>France</span></div>
+    <div class="cust-card rv d1"><div class="cust-flag">🇧🇪</div><h4>Traffic</h4><span>Belgium</span></div>
+    <div class="cust-card rv d2"><div class="cust-flag">🇺🇸</div><h4>Matrix LLC</h4><span>USA</span></div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section class="sec" id="certifications">
+  <span class="eyebrow rv">Standards We Hold</span>
+  <h2 class="sec-title rv d1">Certifications & Compliance</h2>
+  <div class="cert-grid">
+    <div class="cert-card rv d1"><div class="cert-icon">🌿</div><h4>GOTS Certified</h4><p>Global Organic Textile Standard for organic fibre production and processing throughout our supply chain.</p></div>
+    <div class="cert-card rv d2"><div class="cert-icon">✅</div><h4>BSCI Audited</h4><p>Business Social Compliance Initiative — covering ethical labour, social standards, and responsible sourcing.</p></div>
+    <div class="cert-card rv d3"><div class="cert-icon">🏭</div><h4>OEKO-TEX® 100</h4><p>Every component tested for harmful substances ensuring fully safe, certified textiles at every production level.</p></div>
+    <div class="cert-card rv d4"><div class="cert-icon">🤝</div><h4>WRAP Certified</h4><p>Worldwide Responsible Accredited Production — confirming lawful, humane and ethical manufacturing practices.</p></div>
+    <div class="cert-card rv d1"><div class="cert-icon">📊</div><h4>SEDEX Compliant</h4><p>Supplier Ethical Data Exchange — full transparency on labour rights, health, safety and business ethics.</p></div>
+    <div class="cert-card rv d2"><div class="cert-icon">🏗️</div><h4>ACCORD</h4><p>Bangladesh Accord on Fire and Building Safety — ensuring our partner factories meet the highest structural safety standards.</p></div>
+    <div class="cert-card rv d3"><div class="cert-icon">♻️</div><h4>Sustainable Sourcing</h4><p>Organic cotton, recycled yarns, sustainable viscose and eco-packaging across our full product portfolio.</p></div>
+    <div class="cert-card rv d4"><div class="cert-icon">🔬</div><h4>In-House Lab Testing</h4><p>Daily fabric and garment cross-checks before release — zero goods leave without in-house QA sign-off.</p></div>
+  </div>
+</section>
+
+<!-- SUSTAINABILITY -->
+<section class="sec sec-alt" id="sustainability">
+  <div class="sus-grid">
+    <div class="sus-img rv">
+      <img src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?q=80&w=800" alt="Sustainability">
+      <div class="sus-bar"><span>♻ Sustainable Sourcing for a Greener Future</span></div>
+    </div>
+    <div>
+      <span class="eyebrow rv">Our Commitment</span>
+      <h2 class="sec-title rv d1">Sustainability at Every Stitch</h2>
+      <p class="sec-sub rv d2">We focus on eco-friendly materials such as organic cotton, recycled yarn, and sustainable viscose. Our sourcing promotes ethical production, minimizes environmental impact, and empowers brands to deliver responsibly made apparel that cares for people and the planet.</p>
+      <div class="pills rv d3">
+        <span class="pill">Organic Cotton</span>
+        <span class="pill">Recycled Yarns</span>
+        <span class="pill">Sustainable Viscose</span>
+        <span class="pill">Water-Based Inks</span>
+        <span class="pill">Ethical Labour</span>
+        <span class="pill">Eco Packaging</span>
+        <span class="pill">Carbon Tracking</span>
+        <span class="pill">GOTS Fibres</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="sec" id="team">
+  <span class="eyebrow rv">The People</span>
+  <h2 class="sec-title rv d1">Our Leadership</h2>
+  <p class="sec-sub rv d2">Meet the team behind BNS Asia Sourcing — experienced professionals dedicated to delivering exceptional apparel solutions for global brands.</p>
+  <div class="team-grid">
+    <div class="team-card rv d1">
+      <div class="team-role">Chief Executive</div>
+      <h3>Mohammad Tareq Omar</h3>
+      <div class="desig">CEO</div>
+      <div class="team-detail">
+        <a href="mailto:tareq@bns-asia.com">tareq@bns-asia.com</a><br>
+        <a href="tel:+8801770440687">+880 1770 440 687</a>
+      </div>
+    </div>
+    <div class="team-card rv d2">
+      <div class="team-role">Director</div>
+      <h3>MD. Moazzem Hossain</h3>
+      <div class="desig">Director</div>
+      <div class="team-detail">
+        <a href="mailto:moazzem@bns-asia.com">moazzem@bns-asia.com</a><br>
+        <a href="tel:+905411503570">+90 5411 503 570</a><br>
+        <a href="tel:+8801632025175">+880 1632 025 175</a>
+      </div>
+    </div>
+    <div class="team-card rv d3">
+      <div class="team-role">Director</div>
+      <h3>Moslahuzzaman Hemel</h3>
+      <div class="desig">Director</div>
+      <div class="team-detail">
+        <a href="mailto:hemel@bns-asia.com">hemel@bns-asia.com</a><br>
+        <a href="tel:+8801713030398">+880 1713 030 398</a><br>
+        <a href="tel:+12677180079">+1 267 718 0079</a>
+      </div>
+    </div>
+    <div class="team-card rv d1">
+      <div class="team-role">Contact — Europe</div>
+      <h3>Ali Khan Russel</h3>
+      <div class="desig">European Representative</div>
+      <div class="team-detail">
+        <a href="tel:+351920577584">+351 920 577 584</a><br>
+        <span>Lisbon, Portugal</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="sec sec-alt" id="contact">
+  <div class="contact-grid">
+    <div>
+      <span class="eyebrow rv">Connect With Us</span>
+      <h2 class="sec-title rv d1">Let's Craft Something Exceptional</h2>
+      <p class="sec-sub rv d2">Reach out to establish project parameters, review cost matrices, verify material availability, or request physical samples from our production facilities.</p>
+      <div class="offices rv d3">
+        <div class="office-card">
+          <h4>🇧🇩 Dhaka HQ</h4>
+          <p>H # 417, Suite #5A, R: 07<br>DOHS Baridhara, Dhaka-1206<br>Bangladesh</p>
+          <strong>Est. 2022</strong>
+        </div>
+        <div class="office-card">
+          <h4>🇵🇹 Lisbon Office</h4>
+          <p>Rua Alves Torgo a Arroios<br>16-D, 1000-033 Lisboa<br>Portugal</p>
+          <strong>European Hub</strong>
+        </div>
+      </div>
+      <div style="margin-top:2rem;font-size:.84rem;color:var(--muted);line-height:1.8;" class="rv d4">
+        <div>✉ <a href="mailto:tareq@bns-asia.com" style="color:var(--teal);">tareq@bns-asia.com</a></div>
+        <div>📞 <a href="tel:+8801770440687" style="color:var(--teal);">+880 1770 440 687</a></div>
+        <div>🌐 Global Sourcing · Design Engineering · Technical QC</div>
+      </div>
+    </div>
+    <div class="rv d2">
+      <form class="contact-form" onsubmit="handleForm(event)">
+        <div class="f-row">
+          <div class="f-group">
+            <label>Your Name</label>
+            <input type="text" placeholder="Jane Smith" required>
+          </div>
+          <div class="f-group">
+            <label>Fashion Label / Company</label>
+            <input type="text" placeholder="Brand Name" required>
+          </div>
+        </div>
+        <div class="f-group">
+          <label>Corporate Email</label>
+          <input type="email" placeholder="you@company.com" required>
+        </div>
+        <div class="f-row">
+          <div class="f-group">
+            <label>Product Category</label>
+            <select>
+              <option value="">Select category...</option>
+              <option>Men's Fine Knit / T-Shirt</option>
+              <option>Ladies Woven</option>
+              <option>Ladies Knit</option>
+              <option>Ladies Sweater</option>
+              <option>Baby & Kids Knit</option>
+              <option>Kids Sweater</option>
+              <option>Denim</option>
+              <option>Handcraft / PVC</option>
+              <option>Multiple Categories</option>
+            </select>
+          </div>
+          <div class="f-group">
+            <label>Estimated Volume</label>
+            <select>
+              <option value="">Select volume...</option>
+              <option>Under 5,000 pcs</option>
+              <option>5,000 – 20,000 pcs</option>
+              <option>20,000 – 100,000 pcs</option>
+              <option>100,000+ pcs</option>
+            </select>
+          </div>
+        </div>
+        <div class="f-group">
+          <label>Project Brief</label>
+          <textarea placeholder="Describe your requirements — fabric specs, target price points, delivery timeline, certifications needed..."></textarea>
+        </div>
+        <button type="submit" class="submit-btn">Submit RFQ →</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-grid">
+    <div class="foot-brand">
+      <div class="brand">BNS Asia Sourcing</div>
+      <p>One-stop readymade garments solution connecting global fashion brands with Bangladesh's world-class manufacturing ecosystem.</p>
+      <div class="socials">
+        <a href="#" class="soc">in</a>
+        <a href="#" class="soc">ig</a>
+        <a href="#" class="soc">tw</a>
+      </div>
+    </div>
+    <div class="foot-col">
+      <h5>Navigation</h5>
+      <ul>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#capabilities">Capabilities</a></li>
+        <li><a href="#products">Products</a></li>
+        <li><a href="#customers">Our Customers</a></li>
+        <li><a href="#sustainability">Sustainability</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="foot-col">
+      <h5>Products</h5>
+      <ul>
+        <li><a href="#products">Men's Fine Knit</a></li>
+        <li><a href="#products">Ladies Woven & Knit</a></li>
+        <li><a href="#products">Baby & Kids</a></li>
+        <li><a href="#products">Sweater Collection</a></li>
+        <li><a href="#products">Denim Range</a></li>
+        <li><a href="#products">Handcraft & PVC</a></li>
+      </ul>
+    </div>
+    <div class="foot-col">
+      <h5>Offices</h5>
+      <ul>
+        <li><a href="#">🇧🇩 Dhaka, Bangladesh</a></li>
+        <li><a href="#">🇵🇹 Lisbon, Portugal</a></li>
+        <li><a href="mailto:tareq@bns-asia.com">tareq@bns-asia.com</a></li>
+        <li><a href="tel:+8801770440687">+880 1770 440 687</a></li>
+        <li><a href="tel:+351920577584">+351 920 577 584</a></li>
+        <li><a href="#contact">Submit RFQ</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span>© 2026 BNS Asia Sourcing. All Rights Reserved. · Est. 2022, Dhaka, Bangladesh.</span>
+    <span><a href="#">Privacy Policy</a> &nbsp;·&nbsp; <a href="#">Terms of Service</a></span>
+  </div>
+</footer>
+
+<script>
+/* LOADER */
+window.addEventListener('load',()=>{setTimeout(()=>{document.getElementById('loader').classList.add('hidden');},2100);});
+
+/* CURSOR */
+const cd=document.getElementById('cur-dot'),cr=document.getElementById('cur-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
+(function tick(){cd.style.cssText=`left:${mx}px;top:${my}px`;rx+=(mx-rx)*.12;ry+=(my-ry)*.12;cr.style.cssText=`left:${rx}px;top:${ry}px`;requestAnimationFrame(tick);})();
+document.querySelectorAll('a,button,.prod-card,.str-card,.cert-card,.cust-card,.team-card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cr.style.transform='translate(-50%,-50%) scale(1.6)';cr.style.borderColor='var(--gold)';});
+  el.addEventListener('mouseleave',()=>{cr.style.transform='translate(-50%,-50%) scale(1)';cr.style.borderColor='var(--teal)';});
+});
+
+/* NAV */
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>{nav.classList.toggle('scrolled',scrollY>60);});
+
+/* SLIDER */
+let cur=0;
+const slides=document.querySelectorAll('.slide'),dots=document.querySelectorAll('.dot');
+function goTo(n){slides[cur].classList.remove('active');dots[cur].classList.remove('active');cur=(n+slides.length)%slides.length;slides[cur].classList.add('active');dots[cur].classList.add('active');}
+function next(){goTo(cur+1);reset();}
+function prev(){goTo(cur-1);reset();}
+let t=setInterval(next,6000);
+function reset(){clearInterval(t);t=setInterval(next,6000);}
+
+/* REVEAL */
+const rvEls=document.querySelectorAll('.rv');
+const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');obs.unobserve(e.target);}});},{threshold:.1});
+rvEls.forEach(el=>obs.observe(el));
+
+/* MOBILE MENU */
+function openMob(){document.getElementById('mobMenu').classList.add('open');document.body.style.overflow='hidden';}
+function closeMob(){document.getElementById('mobMenu').classList.remove('open');document.body.style.overflow='';}
+document.getElementById('mobClose').addEventListener('click',closeMob);
+
+/* FORM */
+function handleForm(e){
+  e.preventDefault();
+  const btn=e.target.querySelector('.submit-btn');
+  btn.textContent='Sending…';btn.style.background='var(--teal-mid)';
+  setTimeout(()=>{btn.textContent='✓ Request Submitted';btn.style.background='#1a8a5a';
+  setTimeout(()=>{btn.textContent='Submit RFQ →';btn.style.background='';e.target.reset();},3000);},1500);
+}
+</script>
+</body>
+</html>
